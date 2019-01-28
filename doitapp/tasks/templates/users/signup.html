@@ -1,0 +1,38 @@
+{% extends 'users/base.html' %}
+
+{% block head_content %}
+   <title>DoitApp - Sign up</title> 
+{% endblock head_content %}
+    
+
+{% block container %}
+    
+    {% if error %}
+        <p class="alert alert-danger">{{error}}</p>
+    {% endif %}
+    
+    <form action="{% url 'signup'%}" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <input type="text" name="username" class="form-control" placeholder="Username" required="true">
+        </div>
+        <div class="form-group">
+            <input type="password" name="passwd" class="form-control" placeholder="Password" required="true">
+        </div>
+        <div class="form-group">
+            <input type="password" name="passwdConfirmation" class="form-control" placeholder="Password confirmation" required="true">
+        </div>
+        <div class="form-group">
+            <input type="text" name="firstName" class="form-control" placeholder="First Name" required="true">
+        </div>
+        <div class="form-group">
+            <input type="text" name="lastName" class="form-control" placeholder="Last Name" required="true">
+        </div>
+        <div class="form-group">
+            <input type="email" name="email" class="form-control" placeholder="Email address" required="true">
+        </div>
+        <button type = "submit" class="btn-bth-primary">Register</button>
+    </form>
+
+{% endblock container %}
+    

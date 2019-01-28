@@ -1,0 +1,19 @@
+{% block container %}
+    {% if error %}
+        <div class="alert alert-danger" role="alert">
+            Invalid password or username
+        </div>
+    {% endif %}
+        
+    <form action="{% url 'login' %}" method="post">
+        {%csrf_token%}
+        <div class="form-group">
+            <input type="text" name="username" placeholder="Username">
+        </div>
+        <div>
+            <input type="password" name="password" placeholder="Password">
+        </div>
+        
+        <button type = "submit" class="btn-bth-primary">Sign In</button>
+    </form>
+{% endblock container %}
