@@ -1,34 +1,24 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import views as auth_views
 from django.shortcuts import render, redirect
-
 from django.contrib.auth.models import User
+from django.db.utils import IntegrityError
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+
+"""Models"""
 from users.models import Profile
 
-from django.db.utils import IntegrityError
+class LoginView(auth_views.LoginView):
+    template_name = 'users/form.html'
+
+class LogoutView( LoginRequiredMixin, auth_views.LogoutView):
+    next_page = '/users/login'
 
 # Create your views here.
-def loginView(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username = username, password = password)
-        if user:
-            login(request, user)
-            print ("Usuario logueado")
-            return redirect('/tasks/')
-        else:
-            print ("Error de inicio de sesion")
-            return render(request, 'users/login.html', {'error': 'Invalid username and password'})
-    else:
-        return render(request, 'users/login.html')
-        
-@login_required
-def logoutView(request):
-    """Logout a user"""
-    logout(request)
-    return redirect('login')
+
 
 def signupView(request):
     if request.method == 'POST':
@@ -51,3 +41,9 @@ def signupView(request):
 
     else:
         return render(request, 'users/signup.html')
+
+def updateProfile(request):
+    return render(request, 'users/updateProfile.html')
+
+
+

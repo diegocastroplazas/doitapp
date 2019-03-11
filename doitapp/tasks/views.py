@@ -1,13 +1,16 @@
+"""Django libraries"""
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import render, redirect
-from .models import Task
 from django.http import Http404
 from django.contrib.auth.decorators import login_required
 
+"""Models"""
+from .models import Task
+
 def index(request):
-    return render(request, 'tasks/login.html')
+    return render(request, 'tasks/index.html')
 
 def detail(request, taskId):
     task = get_object_or_404(Task, pk = taskId)
@@ -21,4 +24,7 @@ def mainTasks(request):
         'tasksList': tasksList
     }
     return render(request, 'tasks/feed.html', context)
+
+
+
     

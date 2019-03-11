@@ -18,12 +18,9 @@ from django.urls import path, include
 from users import views as usersViews
 from tasks import views as tasksViews
 
-
 urlpatterns = [
+    path('', tasksViews.index, name = 'login'),
     path('admin/', admin.site.urls),
-    path('tasks/', tasksViews.mainTasks, name='feed'),
-    path('users/login/', usersViews.loginView, name = 'login'),
-    path('users/logout/', usersViews.logoutView, name = 'logout'),
-    path('tasks/<int:taskId>/', tasksViews.detail, name='detail'),
-    path('users/signup/', usersViews.signupView, name = 'signup')
+    path('users/', include('users.urls', namespace='users')),
+    path('tasks/', include('tasks.urls', namespace='tasks'))
 ]
