@@ -1,29 +1,23 @@
 """Django libraries"""
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
 from django.template import loader
+from django.utils import timezone
 from django.shortcuts import render, redirect
 from django.http import Http404
-from django.contrib.auth.decorators import login_required
+from django.views.generic import ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 """Models"""
 from .models import Task
 
-def index(request):
-    return render(request, 'tasks/index.html')
+class TasksFeedView(LoginRequiredMixin, ListView):
+    model = Task
+    template_name = 'tasks/feed.html'
+    context_object_name = 'tasksList'
 
-def detail(request, taskId):
-    task = get_object_or_404(Task, pk = taskId)
-    return render(request, 'tasks/detail.html', {'task': task})
-
-@login_required
-def mainTasks(request):
-    tasksList = Task.objects.all()
-    template = loader.get_template('tasks/feed.html')
-    context = {
-        'tasksList': tasksList
-    }
-    return render(request, 'tasks/feed.html', context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['now'] = timezone.now()
+        return context
 
 
 
