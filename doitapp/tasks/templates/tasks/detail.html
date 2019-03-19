@@ -1,3 +1,6 @@
-<h1>{{task.summary}}</h1>
-<h2>Categoría: {{task.category}}</h2>
-<p>{{task.description}}</p>
+{% extends 'tasks/base.html' %}
+{% block detail %}
+    <h1>{{task.summary}}</h1>
+    <h2>Categoría: {{task.category}}</h2>
+    <p>{{task.description}}</p>
+{% endblock detail %}

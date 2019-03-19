@@ -7,9 +7,6 @@
 
 {% block container %}
     <div class = 'container'>
-        <div class="row">
-            <a href="{% url "users:logout" %}">Logout</a>
-        </div>
         {% if tasksList %}
             {% for task in tasksList %}
                 {% include "tasks/task_card.html" %}
